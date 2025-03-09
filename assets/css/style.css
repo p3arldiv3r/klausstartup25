@@ -834,14 +834,21 @@ textarea::-ms-input-placeholder{
 Nav Menu style
 ==================*/
 
+.navbar-header {
+    margin: 10px 10px;
+    padding: 5px 10px;
+}
+
 .navbar-brand {
-    padding: 15px 10px;
+    padding: 5px 10px;
+    width: auto; /* Ensures it does not stretch */
+    max-width: 100%; /* Keeps it from overflowing */
 }
 .navbar-brand > img {
     display: block;
     width: auto;
+    max-width: 100%;
     max-height: 50px;
-    object-fit: contain; 
 }
 
 .navbar-callus li a{
@@ -866,13 +873,25 @@ Nav Menu style
     color:#fff;
 }
 
+.attr-nav {
+    position: absolute;  
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-left: -10px;
+}
+@media (max-width: 768px) {
+    .attr-nav {
+        right: 30px;  
+    }
+}
 
 /*
 Home Section style
 ==================*/
 
 .home{
-    background: url(../images/home-bg.jpg) no-repeat scroll  center center;
+    background: url(../images/home_test_bg.jpg) no-repeat scroll  center center;
     background-size: cover;
     position: relative;
     padding-top: 300px;
