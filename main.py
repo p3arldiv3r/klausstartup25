@@ -1,15 +1,19 @@
 import uvicorn
 from fastapi import FastAPI, Security, Header
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import AnyHttpUrl, computed_field
+from pydantic import AnyHttpUrl, computed_field, BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from fastapi_azure_auth import B2CMultiTenantAuthorizationCodeBearer
 
-from fastapi import Request
+from fastapi import Request, HTTPException
+import requests
+from fastapi.responses import JSONResponse
+import os
+from fastapi.staticfiles import StaticFiles
 
 class Settings(BaseSettings):
-    BACKEND_CORS_ORIGINS: list[str | AnyHttpUrl] = ['http://localhost:8000']
+    BACKEND_CORS_ORIGINS: list[str | AnyHttpUrl] = ['http://localhost:8000', 'http://localhost:8080']
     TENANT_NAME: str = ""
     APP_CLIENT_ID: str = ""
     OPENAPI_CLIENT_ID: str = ""
@@ -54,7 +58,7 @@ settings = Settings()
 app = FastAPI(
     swagger_ui_oauth2_redirect_url='/oauth2-redirect',
     swagger_ui_init_oauth={
-        'usePkceWithAuthorizationCodeGrant': False,
+        'usePkceWithAuthorizationCodeGrant': True,
         'clientId': settings.OPENAPI_CLIENT_ID,
         'scopes': settings.SCOPE_NAME,
     },
@@ -78,13 +82,28 @@ azure_scheme = B2CMultiTenantAuthorizationCodeBearer(
     validate_iss=False,
 )
 
+# @app.get("/", dependencies=[Security(azure_scheme)])
+# async def root():
+#     return {"message": "Hello World"}
+
 @app.get("/", dependencies=[Security(azure_scheme)])
 async def root():
-    return {"message": "Hello World"}
+    # Optionally, you can access user claims from the token via the dependency.
+    # For now, we just return a custom HTML page.
+    html_content = """
+    <html>
+      <head>
+        <title>Custom Page</title>
+      </head>
+      <body>
+        <h1>Welcome, custom user!</h1>
+        <p>Your token has been validated successfully.</p>
+      </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content, status_code=200)
 
-@app.get("/signin-oidc")
-async def auth_callback(request: Request):
-    return RedirectResponse(url="http://localhost:8000/docs")
+
 
 if __name__ == '__main__':
     uvicorn.run('main:app', reload=True)
