@@ -52,19 +52,20 @@ function signIn() {
 }
 
 function callApi(accessToken) {
-    console.log("Access Token being sent:", accessToken);
-    fetch("http://localhost:8000/", {
-        method: "GET",
-        headers: {
-            "Authorization": `Bearer ${accessToken}`,
-            "Content-Type": "application/json"
-        }
-    })
-    .then(response => response.text())  
-    .then(html => {
-        document.body.innerHTML = html;
-    })
-    .catch(error => console.error("API Request Failed:", error));
+    console.log("Redirecting with Access Token (via POST)...");
+    
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "http://localhost:8000/"; 
+
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "token";  
+    input.value = accessToken;
+    form.appendChild(input);
+
+    document.body.appendChild(form);
+    form.submit();
 }
 
 

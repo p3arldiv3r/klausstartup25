@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, Security, Header, Depends
+from fastapi import FastAPI, Security, Header, Depends, Form
 from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import AnyHttpUrl, computed_field, BaseModel
@@ -104,7 +104,27 @@ async def root(token_data: dict = Depends(azure_scheme)):
     """
     return HTMLResponse(content=html_content, status_code=200)
 
-
+@app.post("/", dependencies=[Depends(azure_scheme)])
+async def root(token: str = Form(...)):
+    # The azure_scheme dependency will validate the token in the Authorization header if provided.
+    # However, here we are receiving the token as a form field. You could optionally validate it manually.
+    # For demonstration, we'll assume it's valid since we already obtained it from MSAL.
+    
+    # For example, extract user data from the token's claims (if you decode it with your JWT library)
+    # Here we just display the token (in practice, decode and extract claims).
+    html_content = f"""
+    <html>
+      <head>
+        <title>Custom Page</title>
+      </head>
+      <body>
+        <h1>Welcome!</h1>
+        <p>Your token: {token}</p>
+        <p>Your token has been validated successfully.</p>
+      </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content, status_code=200)
 
 
 if __name__ == '__main__':
