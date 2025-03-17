@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, Security, Header
+from fastapi import FastAPI, Security, Header, Depends
 from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import AnyHttpUrl, computed_field, BaseModel
@@ -67,7 +67,8 @@ app = FastAPI(
 if settings.BACKEND_CORS_ORIGINS:
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
+        # allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
+        allow_origins=['*'],
         allow_credentials=True,
         allow_methods=['*'],
         allow_headers=['*'],
@@ -86,22 +87,23 @@ azure_scheme = B2CMultiTenantAuthorizationCodeBearer(
 # async def root():
 #     return {"message": "Hello World"}
 
-@app.get("/", dependencies=[Security(azure_scheme)])
-async def root():
-    # Optionally, you can access user claims from the token via the dependency.
-    # For now, we just return a custom HTML page.
-    html_content = """
+@app.get("/", dependencies=[Depends(azure_scheme)])
+async def root(token_data: dict = Depends(azure_scheme)):  
+    token_dict = token_data.dict() 
+    user_email = token_dict.get("claims", {}).get("emails", ["User"])[0]
+    html_content = f"""
     <html>
       <head>
         <title>Custom Page</title>
       </head>
       <body>
-        <h1>Welcome, custom user!</h1>
+        <h1>Welcome, {user_email}!</h1>
         <p>Your token has been validated successfully.</p>
       </body>
     </html>
     """
     return HTMLResponse(content=html_content, status_code=200)
+
 
 
 

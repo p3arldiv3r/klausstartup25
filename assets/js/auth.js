@@ -13,9 +13,10 @@ async function processRedirectResponse() {
 
     try {
         const response = await msalInstance.handleRedirectPromise();
+        console.dir(response);
         if (response) {
             console.log("Redirect response received:", response);
-            msalInstance.setActiveAccount(response.account);  // ✅ Set active account after login
+            msalInstance.setActiveAccount(response.account);  
             acquireTokenSilent();
         } else {
             console.log("No redirect response. Checking existing accounts...");
@@ -59,10 +60,13 @@ function callApi(accessToken) {
             "Content-Type": "application/json"
         }
     })
-    .then(response => response.json())
-    .then(data => console.log("Protected API Data:", data))
+    .then(response => response.text())  
+    .then(html => {
+        document.body.innerHTML = html;
+    })
     .catch(error => console.error("API Request Failed:", error));
 }
+
 
 processRedirectResponse();
 
