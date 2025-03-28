@@ -52,21 +52,31 @@ function signIn() {
 }
 
 function callApi(accessToken) {
-    console.log("Redirecting with Access Token (via POST)...");
-    
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = "http://localhost:8000/"; 
+    console.log("Calling API with Access Token...");
 
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = "token";  
-    input.value = accessToken;
-    form.appendChild(input);
-
-    document.body.appendChild(form);
-    form.submit();
+    fetch("http://localhost:8000/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({ message: "Requesting access" })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.text();  // Response is HTML
+    })
+    .then(data => {
+        console.log("API Response:", data);
+        document.open();  
+        document.write(data);  // Replace current page with new HTML
+        document.close();  
+    })
+    .catch(error => console.error("Error calling API:", error));
 }
+
 
 
 processRedirectResponse();

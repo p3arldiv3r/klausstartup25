@@ -68,7 +68,7 @@ if settings.BACKEND_CORS_ORIGINS:
     app.add_middleware(
         CORSMiddleware,
         # allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
-        allow_origins=['*'],
+        allow_origins=["http://localhost:8080", '*'],
         allow_credentials=True,
         allow_methods=['*'],
         allow_headers=['*'],
@@ -104,27 +104,23 @@ async def root(token_data: dict = Depends(azure_scheme)):
     """
     return HTMLResponse(content=html_content, status_code=200)
 
-@app.post("/", dependencies=[Depends(azure_scheme)])
-async def root(token: str = Form(...)):
-    # The azure_scheme dependency will validate the token in the Authorization header if provided.
-    # However, here we are receiving the token as a form field. You could optionally validate it manually.
-    # For demonstration, we'll assume it's valid since we already obtained it from MSAL.
-    
-    # For example, extract user data from the token's claims (if you decode it with your JWT library)
-    # Here we just display the token (in practice, decode and extract claims).
+@app.post("/")
+async def root(token_data: dict = Security(azure_scheme)):
+    print(token_data)
+    user_email = token_data.claims.get("emails", ["User"])[0] 
     html_content = f"""
     <html>
       <head>
         <title>Custom Page</title>
       </head>
       <body>
-        <h1>Welcome!</h1>
-        <p>Your token: {token}</p>
+        <h1>Welcome, {user_email}!</h1>
         <p>Your token has been validated successfully.</p>
       </body>
     </html>
     """
     return HTMLResponse(content=html_content, status_code=200)
+
 
 
 if __name__ == '__main__':
