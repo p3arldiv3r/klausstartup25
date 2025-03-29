@@ -1,0 +1,152 @@
+:root {
+  --primary-color: #1E88E5;
+  --secondary-color: #43A047;
+  --accent-color: #FFB300;
+  --bg-light: #f8f9fa;
+  --text-muted: #6c757d;
+}
+
+
+/* Navbar Styling */
+.navbar {
+  min-height: 64px !important; /* Increased from 48px */
+  padding: 0.6rem 1.5rem !important; /* More vertical breathing room */
+  background-color: #004080 !important;
+}
+
+.navbar-brand img {
+  height: 36px !important; /* Slightly larger logo */
+}
+
+.navbar-text {
+  font-size: 1rem; /* Slightly larger user greeting */
+  font-weight: 500; /* Make it stand out a bit more */
+}
+
+
+/* Sidebar Styling */
+.sidebar {
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+.nav-link:hover {
+  background-color: #e7f1ff;
+  transition: 0.2s ease-in-out;
+}
+
+/* File Preview Box */
+#docPreview {
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  font-family: monospace;
+}
+
+/* Chat Styling */
+#chatWindow {
+  background-color: #fdfdfd;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+}
+.chat-msg {
+  margin-bottom: 10px;
+}
+.chat-user {
+  text-align: right;
+  color: #fff;
+  background-color: #0d6efd;
+  padding: 8px;
+  border-radius: 12px;
+}
+.chat-bot {
+  text-align: left;
+  background-color: #e6e6e6;
+  padding: 8px;
+  border-radius: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+.card {
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 0.5rem;
+}
+
+.nav-link {
+  transition: all 0.2s ease;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+}
+
+.nav-link:hover {
+  background-color: #e9f2ff;
+  font-weight: 500;
+}
+
+#listItems .nav-link.active {
+  color: #004080;
+  font-weight: 500;
+  background-color: #e7f1ff;
+  border-left: 4px solid #004080;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #333;
+}
+h5.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.sidebar-section-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #888;
+}
+
+.sidebar {
+  background-color: #f8fbff;
+  border-right: 1px solid #dee2e6;
+}
+#listItems .nav-link {
+  font-size: 0.95rem;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#listItems .nav-link i {
+  color: #6c757d;
+}
+#listItems .nav-link:hover {
+  background-color: #e9f2ff;
+}
+
+button, .nav-link {
+  transition: all 0.2s ease-in-out;
+}
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card {
+  padding: 0.5rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.card-title {
+  background: linear-gradient(90deg, #1E88E5 0%, #43A047 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
