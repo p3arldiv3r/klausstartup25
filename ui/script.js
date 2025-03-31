@@ -12,20 +12,24 @@ function setRole(role) {
     sidebarTitle.innerHTML =  `<i class="fas fa-users me-2 text-primary"></i>Patients`;  
     userNameSpan.innerText = "Dr. Smith";
 
-    const patients = [
-      "Maria Gonzalez",
-      "James Lee",
-      "Sofia Patel",
-      "Mohamed Ali",
-    ];
-    listItems.innerHTML = "";
-    patients.forEach((p) => {
-      listItems.innerHTML += `
+const patients = [
+  { name: "Ava Thompson", tag: "Diabetic" },
+  { name: "Miguel Santiago", tag: "Cardiac" },
+  { name: "Chloe Zhang", tag: "Pediatric" },
+];
+
+listItems.innerHTML = "";
+patients.forEach((p) => {
+  const initials = p.name.split(" ").map(w => w[0]).join("");
+  const tagBadge = `<span class="badge bg-light text-dark border ms-2">${p.tag}</span>`;
+  listItems.innerHTML += `
     <li class="nav-item">
-      <a class="nav-link text-dark d-flex align-items-center" href="#">
-      <i class='fas fa-user me-2 text-secondary'></i>${p}</a>
+      <a class="nav-link text-dark d-flex align-items-center justify-content-between" href="#">
+        <div><i class='fas fa-user me-2 text-secondary'></i>${p.name}${tagBadge}</div>
+      </a>
     </li>`;
-    });
+});
+    
   } else {
     document.getElementById("providerPanel").classList.add("hidden");
     document.getElementById("providerActions").classList.add("hidden");
@@ -37,12 +41,16 @@ function setRole(role) {
 
     listItems.innerHTML = `
         <div class="sidebar-section-title">Today</div>
-        <li class="nav-item"><a class="nav-link text-dark" href="#"><i class='fas fa-file-alt me-2'></i>Summary.pdf</a></li>
+        <li class="nav-item"><a class="nav-link text-dark d-flex justify-content-between align-items-center" href="#">
+        <span><i class='fas fa-file-alt me-2'></i>Visit Notes</span><span class="badge bg-light text-muted border">PDF</span></a></li>
         <div class="sidebar-section-title">Yesterday</div>
-        <li class="nav-item"><a class="nav-link text-dark" href="#"><i class='fas fa-file-alt me-2'></i>Report.pdf</a></li>
+        <li class="nav-item"><a class="nav-link text-dark d-flex justify-content-between align-items-center" href="#">
+        <span><i class='fas fa-file-alt me-2'></i>Chest XRay</span><span class="badge bg-light text-muted border">DCM</span></a></li>
         <div class="sidebar-section-title">Previous 7 Days</div>
-        <li class="nav-item"><a class="nav-link text-dark" href="#"><i class='fas fa-file-alt me-2'></i>Diagnosis.txt</a></li>
-        <li class="nav-item"><a class="nav-link text-dark" href="#"><i class='fas fa-file-alt me-2'></i>Scan Results.docx</a></li>
+        <li class="nav-item"><a class="nav-link text-dark d-flex justify-content-between align-items-center" href="#">
+        <span><i class='fas fa-file-alt me-2'></i>Lab Report</span><span class="badge bg-light text-muted border">TXT</span></a></li>
+        <li class="nav-item"><a class="nav-link text-dark d-flex justify-content-between align-items-center" href="#">
+        <span><i class='fas fa-file-alt me-2'></i>Discharge Summary</span><span class="badge bg-light text-muted border">DOC</span></a></li>
       `;
   }
   // Highlight clicked sidebar item
@@ -75,6 +83,10 @@ document.getElementById("fileUpload")?.addEventListener("change", (e) => {
   } else {
     preview.innerText = "Unsupported file type. Please upload a text file.";
   }
+});
+
+document.getElementById("dropzone").addEventListener("click", (e) => {
+  document.getElementById("fileUpload").click();
 });
 
 document.getElementById("translateButton")?.addEventListener("click", () => {

@@ -1,28 +1,33 @@
 :root {
-  --primary-color: #1E88E5;
-  --secondary-color: #43A047;
-  --accent-color: #FFB300;
-  --bg-light: #f8f9fa;
-  --text-muted: #6c757d;
+  --primary-color: #2563eb;      /* blue-600 */
+  --secondary-color: #22c55e;    /* green-500 */
+  --accent-color: #facc15;       /* amber-400 */
+  --gray-100: #f9fafb;
+  --gray-800: #1f2937;
+  --text-muted: #6b7280;
 }
-
-
 /* Navbar Styling */
 .navbar {
-  min-height: 64px !important; /* Increased from 48px */
-  padding: 0.6rem 1.5rem !important; /* More vertical breathing room */
+  min-height: 64px !important; 
+  padding: 0.6rem 1.5rem !important;
   background-color: #004080 !important;
 }
 
 .navbar-brand img {
-  height: 36px !important; /* Slightly larger logo */
+  height: 36px !important; 
 }
 
 .navbar-text {
-  font-size: 1rem; /* Slightly larger user greeting */
-  font-weight: 500; /* Make it stand out a bit more */
+  font-size: 1rem; 
+  font-weight: 500; 
 }
-
+.navbar-nav .nav-link {
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+.navbar-nav .nav-link:hover {
+  background-color: rgba(255,255,255,0.1);
+}
 
 /* Sidebar Styling */
 .sidebar {
@@ -32,16 +37,6 @@
 .nav-link:hover {
   background-color: #e7f1ff;
   transition: 0.2s ease-in-out;
-}
-
-/* File Preview Box */
-#docPreview {
-  background-color: #f4f4f4;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  white-space: pre-wrap;
-  font-family: monospace;
 }
 
 /* Chat Styling */
@@ -73,9 +68,11 @@
 }
 
 .card {
-  border-radius: 5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   padding: 0.5rem;
+  border-radius: 1rem; /* rounded-xl */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); /* shadow-md */
+    border: 1px solid #e5e7eb;
+    background-color: #ffffff;
 }
 
 .nav-link {
@@ -89,44 +86,22 @@
   font-weight: 500;
 }
 
-#listItems .nav-link.active {
-  color: #004080;
-  font-weight: 500;
-  background-color: #e7f1ff;
-  border-left: 4px solid #004080;
-}
-
 body {
   font-family: 'Inter', sans-serif;
   font-size: 16px;
   color: #333;
 }
-h5.card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
+
+
+
 .sidebar-section-title {
   font-size: 0.8rem;
-  font-weight: 600;
-  color: #888;
-}
-
-.sidebar {
-  background-color: #f8fbff;
-  border-right: 1px solid #dee2e6;
-}
-#listItems .nav-link {
-  font-size: 0.95rem;
-  color: #444;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-#listItems .nav-link i {
-  color: #6c757d;
-}
-#listItems .nav-link:hover {
-  background-color: #e9f2ff;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+  margin-bottom: 0.1rem;
 }
 
 button, .nav-link {
@@ -150,3 +125,100 @@ button:hover {
   color: transparent;
 }
 
+h5.card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.15rem rgba(30, 136, 229, 0.25);
+}
+
+.btn {
+  border-radius: 0.5rem;
+}
+.btn-primary:hover {
+  background-color: #1565c0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.btn-outline-secondary:hover {
+  background-color: #f1f1f1;
+}
+
+#docPreview {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  font-size: 0.9rem;
+  font-family: monospace;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+#listItems .nav-link {
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+}
+#listItems .nav-link.active {
+  background-color: #e0f2ff;
+  color: var(--primary-color);
+  border-left: 4px solid var(--primary-color);
+  font-weight: 600;
+}
+
+.right-pane-bg .card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.left-pane-bg,
+.right-pane-bg {
+  background-color: #f3f3f3;
+  border-radius: 12px;        
+  padding: 1rem;              
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03); 
+}
+
+.health-card {
+  background-color: #fef2f2; /* bg-red-50 */
+  border-left: 4px solid #dc2626; /* red-600 */
+}
+.health-card i {
+  color: #dc2626;
+}
+.calendar-card {
+  background-color: #eff6ff;
+  border-left: 4px solid #2563eb;
+}
+
+.timeline {
+  border-left: 2px solid #dee2e6;
+  padding-left: 1rem;
+  position: relative;
+}
+.timeline li::before {
+  content: '';
+  position: absolute;
+  left: -9px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  background: var(--primary-color);
+  border-radius: 50%;
+}
+
+.quick-actions button {
+  border-radius: 20px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
