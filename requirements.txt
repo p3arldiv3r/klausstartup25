@@ -19,7 +19,7 @@ exceptiongroup==1.2.2
 executing==2.2.0
 fastapi==0.115.11
 fastapi-azure-auth==5.1.0
-h11==0.14.0
+h11>=0.16.0
 httpcore==1.0.7
 httpx==0.28.1
 idna==3.10
